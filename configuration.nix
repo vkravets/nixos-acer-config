@@ -207,16 +207,20 @@
   ];
 
   programs = {
-    # neovim = {
-    #   enable = true;
-    #   defaultEditor = true;
-    #   viAlias = true;
-    #   vimAlias = true;
-    # };
     fish = {
       enable = true;
     };
+
+    command-not-found = {
+      enable = false;
+    };
+
+    nix-index = {
+      enable = true;
+      enableFishIntegration = true;
+    };
   };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -232,7 +236,10 @@
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
+
+  # Enable 69 port for tftp
   networking.firewall.allowedUDPPorts = [ 69 ];
+
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

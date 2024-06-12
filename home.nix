@@ -37,6 +37,9 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
 
+    # Gnome stuff
+    gnome.gnome-tweaks
+
     # Gnome Extensions
     gnomeExtensions.user-themes
     gnomeExtensions.dash-to-dock
@@ -89,6 +92,14 @@
     # Remote play
     moonlight-qt
   ];
+
+  # home.pointerCursor = {
+  #   name = "Capitaine Cursors White";
+  #   package = pkgs.capitaine-cursors-themed;
+  #   size = 30;
+  #   x11.enable = true;
+  #   gtk.enable = true;
+  # };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -363,6 +374,7 @@
         lh = "exa -lah --icons -s type";
         lt = "exa -lT --icons -s type";
         lr = "exa -ls modified --icons";
+        tide-config = "tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Angled --powerline_prompt_heads=Sharp --powerline_prompt_tails=Flat --powerline_prompt_style='Two lines, character' --prompt_connection=Disconnected --powerline_right_prompt_frame=No --prompt_spacing=Compact --icons='Many icons' --transient=Yes";
       };
 
       shellInit = ''
@@ -408,6 +420,10 @@
 
       plugins = [
         {
+          name = "prompt-tide";
+          src = pkgs.fishPlugins.tide.src;
+        }
+        {
           name = "fzf";
           src = pkgs.fetchFromGitHub {
             owner = "PatrickF1";
@@ -425,15 +441,15 @@
             hash = "sha256-iHlxCEKYyKHlIpyOz4bwTQ6R0lr7FqZb54/wuWfWQfg=";
           };
         }
-        {
-          name = "bobthefish";
-          src = pkgs.fetchFromGitHub {
-            owner = "oh-my-fish";
-            repo = "theme-bobthefish";
-            rev = "master";
-            hash = "sha256-LB4g+EA3C7OxTuHfcxfgl8IVBe5NufFc+5z9VcS0Bt0=";
-          };
-        }
+        # {
+        #   name = "bobthefish";
+        #   src = pkgs.fetchFromGitHub {
+        #     owner = "oh-my-fish";
+        #     repo = "theme-bobthefish";
+        #     rev = "master";
+        #     hash = "sha256-LB4g+EA3C7OxTuHfcxfgl8IVBe5NufFc+5z9VcS0Bt0=";
+        #   };
+        # }
       ];
     };
 
@@ -455,10 +471,27 @@
     };
   };
 
+  # gtk = {
+  #   enable = true;
+  # };
+
   dconf = {
     enable = true;
 
     settings = {
+
+      "org/gnome/desktop/peripherals/touchpad" = {
+        two-finger-scrolling-enabled = true;
+        natural-scroll = true;
+      };
+
+      "org/gnome/desktop/peripherals/mouse" = {
+        natural-scroll = true;
+      };
+
+      "org/gnome/desktop/peripherals/keyboard" = {
+        repeat-interval = 15;
+      };
 
       "org/gnome/desktop/interface" = {
         color-scheme = "prefer-dark";
