@@ -329,6 +329,7 @@
   home.sessionVariables = {
     NVIM_APPNAME = "lazyvim";
     FZF_DEFAULT_OPTS = "--no-height";
+    FLAKE = "/home/easynix/nix-config";
   };
 
   # Let Home Manager install and manage itself.
