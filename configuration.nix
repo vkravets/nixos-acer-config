@@ -171,6 +171,7 @@
       "networkmanager"
       "wheel"
       "flatpak"
+      "docker"
     ];
     packages = with pkgs; [
       firefox
@@ -203,8 +204,15 @@
     choose
     home-manager
     unzip
+    libarchive
     uftpd
   ];
+
+  virtualisation.docker = {
+    storageDriver = "btrfs";
+    enable = true;
+    enableOnBoot = false;
+  };
 
   programs = {
     fish = {

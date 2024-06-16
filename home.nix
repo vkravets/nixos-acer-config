@@ -482,11 +482,11 @@
 
       "org/gnome/desktop/peripherals/touchpad" = {
         two-finger-scrolling-enabled = true;
-        natural-scroll = true;
+        natural-scroll = false;
       };
 
       "org/gnome/desktop/peripherals/mouse" = {
-        natural-scroll = true;
+        natural-scroll = false;
       };
 
       "org/gnome/desktop/peripherals/keyboard" = {
