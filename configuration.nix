@@ -201,6 +201,7 @@
     wget
     curl
     nix-output-monitor
+    nvd
     choose
     home-manager
     unzip
@@ -226,6 +227,13 @@
     nix-index = {
       enable = true;
       enableFishIntegration = true;
+    };
+
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+      flake = "/home/easynix/nix-config";
     };
   };
 

@@ -46,7 +46,7 @@
     in
     {
       nixosConfigurations = {
-        acer-v3 = nixpkgs.lib.nixosSystem {
+        nixos = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit inputs system;
           };

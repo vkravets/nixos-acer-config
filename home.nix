@@ -101,6 +101,14 @@
   #   gtk.enable = true;
   # };
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 22;
+  };
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -331,6 +339,18 @@
       enable = true;
     };
 
+    wezterm = {
+      enable = true;
+      extraConfig = ''
+        -- Your lua code / config here
+        return {
+          font = wezterm.font 'Hack Nerd Font',
+          font_size = 12.0,
+          color_scheme = "Tokyo Night",
+        }
+      '';
+    };
+
     kitty = {
       enable = true;
 
@@ -515,6 +535,7 @@
         favorite-apps = [
           "org.gnome.Nautilus.desktop"
           "kitty.desktop"
+          "org.wezfurlong.wezterm.desktop"
           "google-chrome.desktop"
           "idea-ultimate.desktop"
         ];
