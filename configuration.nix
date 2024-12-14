@@ -20,7 +20,7 @@
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -139,7 +139,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -235,6 +235,8 @@
       clean.extraArgs = "--keep-since 4d --keep 3";
       flake = "/home/easynix/nix-config";
     };
+
+    steam.enable = true;
   };
 
   # Some programs need SUID wrappers, can be configured further or are

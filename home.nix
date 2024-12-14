@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -38,7 +43,7 @@
     # '')
 
     # Gnome stuff
-    gnome.gnome-tweaks
+    gnome-tweaks
 
     # Gnome Extensions
     gnomeExtensions.user-themes
@@ -78,9 +83,9 @@
     marksman
     # Use LTS version, need for installation of some plugins
     nodejs_20
-    python311
-    python311Packages.ruff-lsp
-    python311Packages.pynvim
+    python312
+    #python312Packages.ruff-lsp
+    python312Packages.pynvim
 
     # IDE
     jetbrains.idea-ultimate
@@ -372,6 +377,8 @@
 
     neovim = {
       enable = true;
+      # Use ${system} instead of x86_64-linux
+      package = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.neovim-unwrapped;
       defaultEditor = true;
       vimAlias = true;
       vimdiffAlias = true;
