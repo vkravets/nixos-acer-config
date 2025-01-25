@@ -7,18 +7,18 @@
       url = "github:NixOS/nixpkgs/nixos-24.11";
     };
 
-    nixpkgs-unstable = {
-      url = "github:NixOS/nixpkgs/nixos-unstable";
-    };
+    #nixpkgs-unstable = {
+    #  url = "github:NixOS/nixpkgs/nixos-unstable";
+    #};
 
     ghostty = {
       url = "github:ghostty-org/ghostty";
     };
 
-    wezterm-flake = {
-      url = "github:wez/wezterm/main?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    #wezterm-flake = {
+    #  url = "github:wez/wezterm/main?dir=nix";
+    #  inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #};
 
     paperwm-flake = {
       url = "github:paperwm/PaperWM/release";
@@ -48,7 +48,7 @@
     {
       self,
       nixpkgs,
-      nixpkgs-unstable,
+      #nixpkgs-unstable,
       ghostty,
       nixos-hardware,
       grub2-themes,
