@@ -54,7 +54,7 @@
 
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+        efiSysMountPoint = "/boot"; # ← use the same mount point here.
       };
 
       grub = {
@@ -177,6 +177,7 @@
       firefox
       kitty
       #  thunderbird
+      inputs.ghostty.packages.x86_64-linux.default
     ];
   };
 

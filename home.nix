@@ -56,6 +56,7 @@
     gnomeExtensions.gnome-40-ui-improvements
     gnomeExtensions.control-blur-effect-on-lock-screen
     gnomeExtensions.no-overview
+    inputs.paperwm-flake.packages.${pkgs.system}.default
 
     # Gnome browser connector
     gnome-browser-connector
@@ -346,13 +347,17 @@
     };
 
     wezterm = {
-      enable = true;
+      enable = false;
+      package = inputs.wezterm-flake.packages.${pkgs.system}.default;
       extraConfig = ''
         -- Your lua code / config here
         return {
           font = wezterm.font 'Hack Nerd Font',
           font_size = 12.0,
           color_scheme = "Tokyo Night",
+          
+          front_end = "WebGpu",
+          webgpu_power_preference = 'HighPerformance',
         }
       '';
     };
@@ -378,7 +383,7 @@
     neovim = {
       enable = true;
       # Use ${system} instead of x86_64-linux
-      package = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.neovim-unwrapped;
+      #package = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.neovim-unwrapped;
       defaultEditor = true;
       vimAlias = true;
       vimdiffAlias = true;
@@ -457,7 +462,7 @@
             owner = "PatrickF1";
             repo = "fzf.fish";
             rev = "main";
-            hash = "sha256-nTiFD8vWjafYE4HNemyoUr+4SgsqN3lIJlNX6IGk+aQ=";
+            hash = "sha256-T8KYLA/r/gOKvAivKRoeqIwE2pINlxFQtZJHpOy9GMM=";
           };
         }
         {
@@ -539,11 +544,13 @@
           gnomeExtensions.no-overview.extensionUuid
           "randomwallpaper@iflow.space"
           "ControlBlurEffectOnLockScreen@pratap.fastmail.fm"
+          inputs.paperwm-flake.packages.${pkgs.system}.default.extensionUuid
         ];
         favorite-apps = [
           "org.gnome.Nautilus.desktop"
-          "kitty.desktop"
-          "org.wezfurlong.wezterm.desktop"
+          "com.mitchellh.ghostty.desktop"
+          #"kitty.desktop"
+          #"org.wezfurlong.wezterm.desktop"
           "google-chrome.desktop"
           "idea-ultimate.desktop"
         ];
