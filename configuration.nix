@@ -16,6 +16,7 @@
     # Configure your nixpkgs instance
     config = {
       allowUnfree = true;
+      # nvidia.acceptLicense = true;
     };
   };
 
@@ -110,7 +111,7 @@
   # TTY
   fonts.packages = with pkgs; [ meslo-lgs-nf ];
   services.kmscon = {
-    enable = true;
+    enable = false;
     hwRender = true;
     extraConfig = ''
       font-name=MesloLGS NF
@@ -137,17 +138,21 @@
     };
     videoDrivers = [
       "modesetting"
-      "nvidia"
+      # "intel"
+      # "nvidia"
     ];
   };
 
-  hardware.nvidia = {
-    open = false;
-    prime = {
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-  };
+  # hardware.nvidia = {
+  #   package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+  #
+  #   open = false;
+  #
+  #   prime = {
+  #     intelBusId = "PCI:0:2:0";
+  #     nvidiaBusId = "PCI:1:0:0";
+  #   };
+  # };
 
   services.gnome.gnome-browser-connector.enable = true;
 
