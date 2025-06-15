@@ -111,8 +111,9 @@
   # TTY
   fonts.packages = with pkgs; [ meslo-lgs-nf ];
   services.kmscon = {
-    enable = false;
-    hwRender = true;
+    enable = true;
+    hwRender = false;
+    extraOptions = "--no-drm";
     extraConfig = ''
       font-name=MesloLGS NF
       font-size=14
