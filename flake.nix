@@ -4,7 +4,8 @@
 
   inputs = {
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-24.11";
+      #url = "github:NixOS/nixpkgs/nixos-25.05";
+      url = "github:NixOS/nixpkgs/nixos-unstable";
     };
 
     #nixpkgs-unstable = {
@@ -20,11 +21,6 @@
     #  inputs.nixpkgs.follows = "nixpkgs-unstable";
     #};
 
-    paperwm-flake = {
-      url = "github:paperwm/PaperWM/release";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
@@ -34,7 +30,8 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      #url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -72,8 +69,8 @@
           };
           modules = [
             nixos-hardware.nixosModules.common-cpu-intel
-            nixos-hardware.nixosModules.common-gpu-nvidia-disable
-            #nixos-hardware.nixosModules.common-gpu-intel
+            nixos-hardware.nixosModules.common-gpu-nvidia
+            nixos-hardware.nixosModules.common-gpu-intel
             nixos-hardware.nixosModules.common-pc-laptop
             nixos-hardware.nixosModules.common-pc-laptop-ssd
             grub2-themes.nixosModules.default

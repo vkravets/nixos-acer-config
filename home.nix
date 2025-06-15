@@ -27,13 +27,9 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    (nerdfonts.override {
-      fonts = [
-        "Hack"
-        "FiraCode"
-        "DroidSansMono"
-      ];
-    })
+    nerd-fonts.hack
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -54,9 +50,7 @@
     gnomeExtensions.status-area-horizontal-spacing
     gnomeExtensions.random-wallpaper
     gnomeExtensions.gnome-40-ui-improvements
-    gnomeExtensions.control-blur-effect-on-lock-screen
     gnomeExtensions.no-overview
-    inputs.paperwm-flake.packages.${pkgs.system}.default
 
     # Gnome browser connector
     gnome-browser-connector
@@ -83,7 +77,7 @@
     wl-clipboard
     marksman
     # Use LTS version, need for installation of some plugins
-    nodejs_20
+    nodejs
     python312
     #python312Packages.ruff-lsp
     python312Packages.pynvim
@@ -540,11 +534,8 @@
           gnomeExtensions.status-area-horizontal-spacing.extensionUuid
           #gnomeExtensions.random-wallpaper.extensionUuid
           gnomeExtensions.gnome-40-ui-improvements.extensionUuid
-          #gnomeExtensions.control-blur-effect-on-lock-screen.extensionUuid
           gnomeExtensions.no-overview.extensionUuid
           "randomwallpaper@iflow.space"
-          "ControlBlurEffectOnLockScreen@pratap.fastmail.fm"
-          inputs.paperwm-flake.packages.${pkgs.system}.default.extensionUuid
         ];
         favorite-apps = [
           "org.gnome.Nautilus.desktop"
