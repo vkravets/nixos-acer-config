@@ -50,7 +50,7 @@
     gnomeExtensions.status-area-horizontal-spacing
     gnomeExtensions.random-wallpaper
     gnomeExtensions.gnome-40-ui-improvements
-    #gnomeExtensions.lockscreen-extension
+    gnomeExtensions.lockscreen-extension
     gnomeExtensions.no-overview
 
     # Gnome browser connector
@@ -526,16 +526,18 @@
       };
 
       "org/gnome/shell" = {
+        disable-user-extensions = false;
         enabled-extensions = with pkgs; [
           #gnomeExtensions.user-themes.extensionUuid
           gnomeExtensions.dash-to-dock.extensionUuid
           gnomeExtensions.appindicator.extensionUuid
           gnomeExtensions.clipboard-indicator.extensionUuid
           gnomeExtensions.status-area-horizontal-spacing.extensionUuid
-          #gnomeExtensions.random-wallpaper.extensionUuid
+          gnomeExtensions.random-wallpaper.extensionUuid
           gnomeExtensions.gnome-40-ui-improvements.extensionUuid
           gnomeExtensions.no-overview.extensionUuid
-          "randomwallpaper@iflow.space"
+          gnomeExtensions.lockscreen-extension.extensionUuid
+          #"randomwallpaper@iflow.space"
         ];
         favorite-apps = [
           "org.gnome.Nautilus.desktop"
@@ -545,9 +547,6 @@
           "google-chrome.desktop"
           "idea-ultimate.desktop"
         ];
-      };
-      "org/gnome/shell/extensions/pop-shell" = {
-        tile-by-default = true;
       };
       "org/gnome/shell/extensions/status-area-horizontal-spacing" = {
         hpadding = 0;
@@ -564,6 +563,12 @@
         unsplash-image-height = 1080;
         unsplash-image-width = 1920;
         unsplash-keyword = "anime, girls, car, forest, nature";
+      };
+      "/org/gnome/shell/extensions/lockscreen-extension" = {
+        gradient-direction-1 = "none";
+        background-size-1 = "cover";
+        blur-radius-1 = 9;
+        blur-brightness-1 = 0.35;
       };
     };
   };
