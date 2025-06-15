@@ -122,6 +122,7 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  #services.desktopManager.plasma6.enable = true;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm = {
@@ -213,6 +214,10 @@
     users = {
       easynix = import ./home.nix;
     };
+  };
+
+  environment.variables = {
+    GSK_RENDERER = "ngl";
   };
 
   # List packages installed in system profile. To search, run:

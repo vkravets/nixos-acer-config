@@ -45,11 +45,12 @@
     gnomeExtensions.user-themes
     gnomeExtensions.dash-to-dock
     gnomeExtensions.appindicator
-    gnomeExtensions.pop-shell
+    #gnomeExtensions.pop-shell
     gnomeExtensions.clipboard-indicator
     gnomeExtensions.status-area-horizontal-spacing
     gnomeExtensions.random-wallpaper
     gnomeExtensions.gnome-40-ui-improvements
+    #gnomeExtensions.lockscreen-extension
     gnomeExtensions.no-overview
 
     # Gnome browser connector
@@ -529,7 +530,6 @@
           #gnomeExtensions.user-themes.extensionUuid
           gnomeExtensions.dash-to-dock.extensionUuid
           gnomeExtensions.appindicator.extensionUuid
-          gnomeExtensions.pop-shell.extensionUuid
           gnomeExtensions.clipboard-indicator.extensionUuid
           gnomeExtensions.status-area-horizontal-spacing.extensionUuid
           #gnomeExtensions.random-wallpaper.extensionUuid
