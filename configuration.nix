@@ -235,6 +235,7 @@
     unzip
     libarchive
     uftpd
+    bibata-cursors
   ];
 
   virtualisation.docker = {
@@ -265,6 +266,17 @@
     };
 
     steam.enable = true;
+
+    dconf = {
+      enable = true;
+      profiles.gdm.databases = [
+        {
+          settings = {
+            "org/gnome/desktop/interface".cursor-theme = "Bibata-Modern-Ice";
+          };
+        }
+      ];
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are

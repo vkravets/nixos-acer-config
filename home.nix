@@ -564,7 +564,7 @@
         unsplash-image-width = 1920;
         unsplash-keyword = "anime, girls, car, forest, nature";
       };
-      "/org/gnome/shell/extensions/lockscreen-extension" = {
+      "org/gnome/shell/extensions/lockscreen-extension" = {
         gradient-direction-1 = "none";
         background-size-1 = "cover";
         blur-radius-1 = 9;
