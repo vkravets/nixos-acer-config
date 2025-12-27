@@ -6,6 +6,11 @@
 }:
 
 {
+
+  imports = [
+    inputs.vicinae.homeManagerModules.default
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "easynix";
@@ -46,12 +51,13 @@
     gnomeExtensions.dash-to-dock
     gnomeExtensions.appindicator
     #gnomeExtensions.pop-shell
-    gnomeExtensions.clipboard-indicator
+    #gnomeExtensions.clipboard-indicator
     gnomeExtensions.status-area-horizontal-spacing
     gnomeExtensions.random-wallpaper
     gnomeExtensions.gnome-40-ui-improvements
     gnomeExtensions.lockscreen-extension
     gnomeExtensions.no-overview
+    gnomeExtensions.vicinae
 
     # Gnome browser connector
     gnome-browser-connector
@@ -77,21 +83,54 @@
     cargo
     wl-clipboard
     marksman
+    statix
+
+    # DEV
+    jdk21_headless
+    maven
+    lua
+
     # Use LTS version, need for installation of some plugins
     nodejs
     python312
     #python312Packages.ruff-lsp
     python312Packages.pynvim
+    uv
 
     # IDE
-    jetbrains.idea-ultimate
-    jetbrains.jdk
+    # jetbrains-toolbox
+    # jetbrains.jdk
+    vscode
+    vscode-extensions.ms-python.python
+    vscode-extensions.ms-python.debugpy
+    vscode-extensions.ms-python.pylint
+    vscode-extensions.ms-python.vscode-pylance
+    vscode-extensions.ms-pyright.pyright
+    vscode-extensions.ms-python.black-formatter
+    vscode-extensions.anweber.vscode-httpyac
+    vscode-extensions.humao.rest-client
+    vscode-extensions.oracle.oracle-java
+    vscode-extensions.vscjava.vscode-maven
+    vscode-extensions.vscjava.vscode-gradle
+    vscode-extensions.platformio.platformio-vscode-ide
+    vscode-extensions.zainchen.json
+    # vscode-extensions.zaaack.markdown-editor
+    vscode-extensions.yzhang.markdown-all-in-one
+    vscode-extensions.ndonfris.fish-lsp
+    vscode-extensions.bmalehorn.vscode-fish
 
     # Browser
     google-chrome
 
     # Remote play
     moonlight-qt
+
+    # Messanger
+    signal-desktop
+
+    nwjs
+    nwjs-ffmpeg-prebuilt
+    vlc
   ];
 
   # home.pointerCursor = {
@@ -229,7 +268,7 @@
         },
 
         {
-          "williamboman/mason.nvim",
+          "mason-org/mason.nvim",
           opts = {
             ensure_installed = {
               "stylua",
@@ -333,6 +372,62 @@
     FLAKE = "/home/easynix/nix-config";
   };
 
+  services = {
+    vicinae = {
+      enable = true;
+      systemd = {
+        enable = true;
+        autoStart = true; # default: false
+        environment = {
+          USE_LAYER_SHELL = 1;
+        };
+      };
+      settings = {
+        close_on_focus_loss = true;
+        consider_preedit = true;
+        pop_to_root_on_close = true;
+        favicon_service = "twenty";
+        search_files_in_root = true;
+        font = {
+          normal = {
+            size = 12;
+            normal = "Maple Nerd Font";
+          };
+        };
+        theme = {
+          #light = {
+          #  name = "vicinae-light";
+          #  icon_theme = "default";
+          #};
+          #dark = {
+          #  name = "vicinae-dark";
+          #  icon_theme = "default";
+          #};
+          light = {
+            name = "ayu-dark";
+            icon_theme = "default";
+          };
+          dark = {
+            name = "ayu-dark";
+            icon_theme = "default";
+          };
+        };
+        launcher_window = {
+          opacity = 0.98;
+        };
+      };
+      extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+        process-manager
+        bluetooth
+        nix
+        power-profile
+        #systemd
+        vscode-recents
+        # Extension names can be found in the link below, it's just the folder names
+      ];
+    };
+  };
+
   # Let Home Manager install and manage itself.
   programs = {
     home-manager.enable = true;
@@ -342,8 +437,8 @@
     };
 
     wezterm = {
-      enable = false;
-      package = inputs.wezterm-flake.packages.${pkgs.system}.default;
+      enable = true;
+      #package = inputs.wezterm-flake.packages.${pkgs.system}.default;
       extraConfig = ''
         -- Your lua code / config here
         return {
@@ -351,8 +446,8 @@
           font_size = 12.0,
           color_scheme = "Tokyo Night",
           
-          front_end = "WebGpu",
-          webgpu_power_preference = 'HighPerformance',
+          -- front_end = "WebGpu",
+          -- webgpu_power_preference = 'HighPerformance',
         }
       '';
     };
@@ -481,14 +576,20 @@
       ];
     };
 
+    delta = {
+      enable = true;
+      enableGitIntegration = true;
+    };
+
     git = {
       enable = true;
-      userName = "Vladimir Kravets";
-      userEmail = "vova.kravets@gmail.com";
-      lfs.enable = true;
-      delta = {
-        enable = true;
+      settings = {
+        user = {
+          name = "Vladimir Kravets";
+          email = "vova.kravets@gmail.com";
+        };
       };
+      lfs.enable = true;
       # difftastic = {
       #   enable = true;
       #   background = "dark";
@@ -531,31 +632,32 @@
           #gnomeExtensions.user-themes.extensionUuid
           gnomeExtensions.dash-to-dock.extensionUuid
           gnomeExtensions.appindicator.extensionUuid
-          gnomeExtensions.clipboard-indicator.extensionUuid
+          #gnomeExtensions.clipboard-indicator.extensionUuid
           gnomeExtensions.status-area-horizontal-spacing.extensionUuid
           gnomeExtensions.random-wallpaper.extensionUuid
           gnomeExtensions.gnome-40-ui-improvements.extensionUuid
           gnomeExtensions.no-overview.extensionUuid
           gnomeExtensions.lockscreen-extension.extensionUuid
+          gnomeExtensions.vicinae.extensionUuid
           #"randomwallpaper@iflow.space"
         ];
         favorite-apps = [
           "org.gnome.Nautilus.desktop"
-          "com.mitchellh.ghostty.desktop"
+          #"com.mitchellh.ghostty.desktop"
           #"kitty.desktop"
-          #"org.wezfurlong.wezterm.desktop"
+          "org.wezfurlong.wezterm.desktop"
           "google-chrome.desktop"
-          "idea-ultimate.desktop"
+          #"idea-ultimate.desktop"
         ];
       };
       "org/gnome/shell/extensions/status-area-horizontal-spacing" = {
         hpadding = 0;
       };
-      "org/gnome/shell/extensions/clipboard-indicator" = {
-        history-size = 100;
-        notify-on-copy = true;
-        toggle-menu = [ "<Control><Alt>v" ];
-      };
+      #"org/gnome/shell/extensions/clipboard-indicator" = {
+      #  history-size = 100;
+      #  notify-on-copy = true;
+      #  toggle-menu = [ "<Control><Alt>v" ];
+      #};
       "org/gnome/shell/extensions/space-iflow-randomwallpaper" = {
         source = "unsplash";
       };
@@ -577,8 +679,8 @@
 
   # Remove extra auto loading fzf key bindings init
   home.extraProfileCommands = ''
-    unlink $out/share/fish/vendor_conf.d/load-fzf-key-bindings.fish
-    unlink $out/share/fish/vendor_functions.d/fzf_key_bindings.fish
+    # unlink $out/share/fish/vendor_conf.d/load-fzf-key-bindings.fish
+    # unlink $out/share/fish/vendor_functions.d/fzf_key_bindings.fish
   '';
 
   systemd.user.startServices = "sd-switch";

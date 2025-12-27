@@ -108,8 +108,13 @@
 
   services.logrotate.checkConfig = false;
 
+  services.power-profiles-daemon.enable = true;
+
   # TTY
-  fonts.packages = with pkgs; [ meslo-lgs-nf ];
+  fonts.packages = with pkgs; [
+    meslo-lgs-nf
+    nerd-fonts.meslo-lg
+  ];
   services.kmscon = {
     enable = true;
     hwRender = false;
@@ -125,12 +130,12 @@
   #services.desktopManager.plasma6.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm = {
+  services.displayManager.gdm = {
     wayland = true;
     enable = true;
   };
 
-  services.xserver.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -156,7 +161,7 @@
   #   };
   # };
 
-  services.gnome.gnome-browser-connector.enable = true;
+  #services.gnome.gnome-browser-connector.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -200,7 +205,8 @@
       firefox
       kitty
       #  thunderbird
-      inputs.ghostty.packages.x86_64-linux.default
+      #inputs.ghostty.packages.x86_64-linux.default
+      wezterm
     ];
   };
 
@@ -216,9 +222,9 @@
     };
   };
 
-  environment.variables = {
-    GSK_RENDERER = "ngl";
-  };
+  #environment.variables = {
+  #  GSK_RENDERER = "ngl";
+  #};
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -236,6 +242,8 @@
     libarchive
     uftpd
     bibata-cursors
+    file
+    tini
   ];
 
   virtualisation.docker = {

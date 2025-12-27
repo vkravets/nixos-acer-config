@@ -2,9 +2,20 @@
 {
   description = "My flake configuration for acer-v3";
 
+  nixConfig = {
+    extra-substituters = [
+      "https://vicinae.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
   inputs = {
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-25.05";
+      url = "github:NixOS/nixpkgs/nixos-25.11";
       # url = "github:NixOS/nixpkgs/nixos-unstable";
     };
 
@@ -12,10 +23,10 @@
     #  url = "github:NixOS/nixpkgs/nixos-unstable";
     #};
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #ghostty = {
+    #  url = "github:ghostty-org/ghostty";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #};
 
     #wezterm-flake = {
     #  url = "github:wez/wezterm/main?dir=nix";
@@ -32,7 +43,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       # url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -41,6 +52,14 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vicinae.url = "github:vicinaehq/vicinae";
+
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -48,10 +67,11 @@
       self,
       nixpkgs,
       #nixpkgs-unstable,
-      ghostty,
+      #ghostty,
       nixos-hardware,
       grub2-themes,
       nix-index-database,
+      vicinae,
       ...
     }@inputs:
     let

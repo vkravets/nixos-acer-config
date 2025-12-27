@@ -14,6 +14,8 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "ehci_pci"
@@ -25,8 +27,12 @@
     "i915"
   ];
   boot.initrd.kernelModules = [ "i915" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [
+    "kvm-intel"
+  ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    acer-wmi-battery
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/d57b2931-cae1-4641-9267-ad0fafc79c78";
