@@ -11,6 +11,21 @@
     inputs.vicinae.homeManagerModules.default
   ];
 
+  nix = {
+    settings = {
+      extra-substituters = [
+        "https://vicinae.cachix.org"
+        "https://nix-community.cachix.org"
+        "https://cache.nixos.org"
+      ];
+      extra-trusted-public-keys = [
+        "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
+    };
+  };
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "easynix";
