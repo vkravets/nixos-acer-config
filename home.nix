@@ -108,7 +108,7 @@
     # Use LTS version, need for installation of some plugins
     nodejs
     python312
-    #python312Packages.ruff-lsp
+    python312Packages.ruff
     python312Packages.pynvim
     uv
 
@@ -146,6 +146,8 @@
     nwjs
     nwjs-ffmpeg-prebuilt
     vlc
+
+    far2l
   ];
 
   # home.pointerCursor = {
@@ -195,180 +197,6 @@
     #  sha256 = "09pg860lh05z15pwajk8ldzjj0hz206rd092b6qp2yir73y8yk93";
     #};
 
-    ##### LazyVim ####
-    "${config.xdg.configHome}/lazyvim/lua/config".source =
-      pkgs.fetchFromGitHub {
-        owner = "LazyVim";
-        repo = "starter";
-        rev = "92b2689e6f11004e65376e84912e61b9e6c58827";
-        hash = "sha256-gE2tRpglA0SxxjGN+uKwkwdR5YurvjVGf8SRKkW0E1U=";
-      }
-      + "/lua/config";
-
-    "${config.xdg.configHome}/lazyvim/lua/plugins/extra-plugins.lua".text = ''
-      -- stylua: ignore
-
-      -- every spec file under config.plugins will be loaded automatically by lazy.nvim
-      --
-      -- In your plugin files, you can:
-      -- * add extra plugins
-      -- * disable/enabled LazyVim plugins
-      -- * override the configuration of LazyVim plugins
-      return {
-        {
-          "lambdalisue/suda.vim",
-          cmd = {"SudaRead", "SudaWrite"},
-        },
-
-        {
-          "gbprod/cutlass.nvim",
-          config = function()
-            require("cutlass").setup({
-                exclude = { "ns", "nS" },
-            })
-          end
-        },
-
-        -- add symbols-outline
-        {
-          "simrat39/symbols-outline.nvim",
-          cmd = "SymbolsOutline",
-          keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
-          config = true,
-        },
-
-        {
-          "nvim-telescope/telescope.nvim",
-          keys = {
-            -- add a keymap to browse plugin files
-            -- stylua: ignore
-            {
-              "<leader>fp",
-              function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
-              desc = "Find Plugin File",
-            },
-          },
-          -- change some options
-          -- opts = {
-          --  defaults = {
-          --    layout_strategy = "horizontal",
-          --    layout_config = { prompt_position = "top" },
-          --    sorting_strategy = "ascending",
-          --    winblend = 0,
-          --  },
-          --},
-        },
-
-        -- add more treesitter parsers
-        {
-          "nvim-treesitter/nvim-treesitter",
-          opts = {
-            ensure_installed = {
-              "bash",
-              "vimdoc",
-              "html",
-              "javascript",
-              "json",
-              "lua",
-              "markdown",
-              "markdown_inline",
-              "python",
-              "query",
-              "regex",
-              "vim",
-              "yaml",
-              "nix"
-            },
-          },
-        },
-
-        {
-          "mason-org/mason.nvim",
-          opts = {
-            ensure_installed = {
-              "stylua",
-              "shellcheck",
-              "shfmt",
-              "flake8",
-            },
-          },
-        },
-
-        -- Use <tab> for completion and snippets (supertab)
-        -- first: disable default <tab> and <s-tab> behavior in LuaSnip
-        {
-          "L3MON4D3/LuaSnip",
-          keys = function()
-            return {}
-          end,
-        },
-        -- then: setup supertab in cmp
-        {
-          "hrsh7th/nvim-cmp",
-          dependencies = {
-            "hrsh7th/cmp-emoji",
-          },
-          ---@param opts cmp.ConfigSchema
-          opts = function(_, opts)
-            local has_words_before = function()
-              unpack = unpack or table.unpack
-              local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-              return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-            end
-
-            local luasnip = require("luasnip")
-            local cmp = require("cmp")
-
-            opts.mapping = vim.tbl_extend("force", opts.mapping, {
-              ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                  cmp.select_next_item()
-                  -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-                  -- they way you will only jump inside the snippet region
-                elseif luasnip.expand_or_jumpable() then
-                  luasnip.expand_or_jump()
-                elseif has_words_before() then
-                  cmp.complete()
-                else
-                  fallback()
-                end
-              end, { "i", "s" }),
-              ["<S-Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                  cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
-                  luasnip.jump(-1)
-                else
-                  fallback()
-                end
-              end, { "i", "s" }),
-            })
-          end,
-        },
-      }
-    '';
-
-    "${config.xdg.configHome}/lazyvim/init.lua".text = ''
-      -- bootstrap lazy.nvim, LazyVim and your plugins
-      require("config.lazy")
-    '';
-
-    "${config.xdg.configHome}/lazyvim/stylua.toml".text = ''
-      indent_type = "Spaces"
-      indent_width = 2
-      column_width = 120
-    '';
-
-    "${config.xdg.configHome}/lazyvim/.neoconf.json".source =
-      pkgs.fetchFromGitHub {
-        owner = "LazyVim";
-        repo = "starter";
-        rev = "92b2689e6f11004e65376e84912e61b9e6c58827";
-        hash = "sha256-gE2tRpglA0SxxjGN+uKwkwdR5YurvjVGf8SRKkW0E1U=";
-      }
-      + "/.neoconf.json";
-
-    #### LazyVim End ####
   };
 
   # You can also manage environment variables but you will have to manually
@@ -513,6 +341,7 @@
         lt = "exa -lT --icons -s type";
         lr = "exa -ls modified --icons";
         tide-config = "tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Angled --powerline_prompt_heads=Sharp --powerline_prompt_tails=Flat --powerline_prompt_style='Two lines, character' --prompt_connection=Disconnected --powerline_right_prompt_frame=No --prompt_spacing=Compact --icons='Many icons' --transient=Yes";
+        far = "far2l --tty";
       };
 
       shellInit = ''

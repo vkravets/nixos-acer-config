@@ -28,11 +28,13 @@
 
     settings = {
       substituters = [
+        "https://nvf.cachix.org"
         "https://vicinae.cachix.org"
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
       ];
       trusted-public-keys = [
+        "nvf.cachix.org-1:GMQWiUhZ6ux9D5CvFFMwnc2nFrUHTeGaXRlVBXo+naI="
         "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -159,8 +161,8 @@
     };
     videoDrivers = [
       "modesetting"
-      # "intel"
-      # "nvidia"
+      #"intel"
+      #"nvidia"
     ];
   };
 
@@ -205,25 +207,29 @@
   xdg.portal.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.easynix = {
-    shell = pkgs.fish;
-    isNormalUser = true;
-    description = "easynix";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "flatpak"
-      "docker"
-    ];
-    packages = with pkgs; [
-      firefox
-      kitty
-      #  thunderbird
-      #inputs.ghostty.packages.x86_64-linux.default
-      wezterm
-    ];
+  users = {
+    groups = {
+      libvirtd.members = [ "easynix" ];
+    };
+    users.easynix = {
+      shell = pkgs.fish;
+      isNormalUser = true;
+      description = "easynix";
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "flatpak"
+        "docker"
+      ];
+      packages = with pkgs; [
+        firefox
+        kitty
+        #  thunderbird
+        #inputs.ghostty.packages.x86_64-linux.default
+        wezterm
+      ];
+    };
   };
-
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -258,15 +264,35 @@
     bibata-cursors
     file
     tini
+    virt-viewer
   ];
 
-  virtualisation.docker = {
-    storageDriver = "btrfs";
-    enable = true;
-    enableOnBoot = false;
+  virtualisation = {
+
+    spiceUSBRedirection = {
+      enable = true;
+    };
+
+    libvirtd = {
+      enable = true;
+
+      qemu = {
+        swtpm.enable = true;
+      };
+    };
+    docker = {
+      storageDriver = "btrfs";
+      enable = true;
+      enableOnBoot = false;
+    };
   };
 
   programs = {
+
+    virt-manager = {
+      enable = true;
+    };
+
     fish = {
       enable = true;
     };
@@ -312,13 +338,16 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall = {
+    # Enable 22 port for ssh
+    allowedTCPPorts = [ 22 ];
 
-  # Enable 69 port for tftp
-  networking.firewall.allowedUDPPorts = [ 69 ];
+    # Enable 69 port for tftp
+    allowedUDPPorts = [ 69 ];
+  };
 
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
